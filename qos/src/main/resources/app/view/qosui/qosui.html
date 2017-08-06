@@ -1,0 +1,82 @@
+<!--
+ Copyright 2016 WIPRO Technologies Limited
+ Licensed under the Apache License, Version 2.0 (the "License");
+ you may not use this file except in compliance with the License.
+ You may obtain a copy of the License at
+
+     http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+-->
+
+<!--
+Note that this HTML markup is injected into the Web UI by Angular
+to make the view "visible" when the user navigates to it.
+   File Name : qosui.html
+   Author    : Bivas
+   Date      : 2nd-April-2016
+-->
+
+<div id="ov-qosui">
+    <div class="tabular-header">
+        <h2> {{tableData.length}} Row Found for Intents Data</h2>
+        <div class="ctrl-btns">
+            <div class="refresh" ng-class="{active: autoRefresh}"
+                 icon icon-id="refresh" icon-size="36"
+                 tooltip tt-msg="autoRefreshTip"
+                 ng-click="toggleRefresh()">
+            </div>
+
+            <div icon icon-size="36" icon-id="garbage"
+                ng-click="deleteIntent('REMOVE')"
+                tooltip tt-msg="uninstallTip"
+                ng-class="{active: ctrlBtnState.selection}">
+            </div>
+
+        </div>
+    </div>
+
+    <div class="summary-list" onos-table-resize>
+
+        <div class="table-header" onos-sortable-header>
+            <table>
+                <tr>
+                    <td colId="sid" sortable>SID </td>
+                    <td colId="smac" sortable>SMAC </td>
+                    <td colId="cmac" sortable>CMAC </td>
+                    <td colId="qid" sortable>QID </td>
+                    <td colId="id" sortable>FID </td>
+                    <td colId="rid" sortable>RID </td>
+                </tr>
+            </table>
+        </div>
+
+        <div class="table-body">
+            <table>
+                <tr ng-if="!tableData.length" class="no-data">
+                    <td colspan="7">
+                        Intents Not Found
+                    </td>
+                </tr>
+
+                <tr ng-repeat="item in tableData track by $index"
+                    ng-click="selectCallback($event, item)"
+                    ng-class="{selected: item.id === selId}">
+                    <td>{{item.sid}}</td>
+                    <td>{{item.smac}}</td>
+                    <td>{{item.cmac}}</td>
+                    <td>{{item.qid}}</td>
+                    <td>{{item.id}}</td>
+                    <td>{{item.rid}}</td>
+                </tr>
+            </table>
+        </div>
+
+    </div>
+
+    <item-details-panel></item-details-panel>
+</div>
